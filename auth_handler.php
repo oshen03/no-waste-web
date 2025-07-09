@@ -79,27 +79,28 @@ if ($action === 'signin') {
         exit;
     }
     
-    // Insert new user with plain text password
+
     $query = "INSERT INTO users (email, password, first_name, last_name) VALUES ('$email', '$password', '$first_name', '$last_name')";
-    $result = Database::iud($query);
     
-    if ($result) {
-        // Get the newly created user
-        $new_user = Database::search("SELECT * FROM users WHERE email = '$email'");
-        if ($new_user && $new_user->num_rows > 0) {
-            $user_data = $new_user->fetch_assoc();
-            
-            $_SESSION['user_id'] = $user_data['user_id'];
-            $_SESSION['username'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
-            $_SESSION['email'] = $user_data['email'];
-            $_SESSION['is_seller'] = false;
-            
-            echo json_encode(['success' => true, 'message' => 'Registration successful']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Registration failed']);
-        }
+
+    Database::iud($query);
+    
+  
+    $new_user = Database::search("SELECT * FROM users WHERE email = '$email'");
+    
+    if ($new_user && $new_user->num_rows > 0) {
+        $user_data = $new_user->fetch_assoc();
+        
+        $_SESSION['user_id'] = $user_data['user_id'];
+        $_SESSION['username'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
+        $_SESSION['email'] = $user_data['email'];
+        $_SESSION['is_seller'] = false;
+        
+        echo json_encode(['success' => true, 'message' => 'Registration successful']);
+        exit;
     } else {
-        echo json_encode(['success' => false, 'message' => 'Registration failed']);
+        echo json_encode(['success' => false, 'message' => 'Registration failed - user not created']);
+        exit;
     }
     
 } else {
