@@ -58,12 +58,12 @@ $offset = ($currentPage - 1) * $productsPerPage;
 $query = "SELECT p.*, pc.category_name 
           FROM products p 
           LEFT JOIN product_categories pc ON p.category_id = pc.category_id 
-          WHERE p.status = 1 AND p.expiry_date > CURDATE()";
+          WHERE p.status = 1 AND p.expiry_date >= CURDATE()";
 
 $countQuery = "SELECT COUNT(*) AS total 
                FROM products p 
                LEFT JOIN product_categories pc ON p.category_id = pc.category_id 
-               WHERE p.status = 1 AND p.expiry_date > CURDATE()";
+               WHERE p.status = 1 AND p.expiry_date >= CURDATE()";
 
 
 if (!empty($search)) {
