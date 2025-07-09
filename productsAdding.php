@@ -311,7 +311,7 @@ $categories = Database::search("SELECT * FROM product_categories WHERE is_active
                                        name="expiry_date" 
                                        placeholder="Expiry Date"
                                        value="<?php echo htmlspecialchars($expiry_date); ?>"
-                                       min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>"
+                                       min="<?php echo date('Y-m-d'); ?>"
                                        required>
                                 <label for="expiry_date">Expiry Date <span class="required">*</span></label>
                             </div>
